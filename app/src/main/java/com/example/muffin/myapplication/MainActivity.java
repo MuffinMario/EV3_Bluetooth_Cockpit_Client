@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private BluetoothAdapter m_btAdapter;
     /* Sensors */
     private SensorManager m_sensorManager;
-    private Sensor m_rotationSensor;
+    private Sensor m_accelerometer;
+    private Sensor m_geomagnetic;
 
 
     private boolean init() {
@@ -47,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         /* 2. Initiate sensors */
         m_sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        m_rotationSensor = m_sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
+        // m_rotationSensor = m_sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);;
+        m_geomagnetic = m_sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        ;
+        m_accelerometer = m_sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         /* 3. Check for adapters */
         m_btAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -58,31 +62,70 @@ public class MainActivity extends AppCompatActivity {
         m_onoffSwitch.setOnClickListener(new SwitchOnOffClickListener(this));
         m_steerSeekbar.setOnSeekBarChangeListener(new SeekBarSteerOnSeekBarChangeListener(this, m_leftrightText));
         m_moveSeekbar.setOnSeekBarChangeListener(new SeekBarMoveOnSeekBarChangeListener(this, m_moveText));
-        m_sensorManager.registerListener(new SensorEventListener() {
+        SensorEventListener listener = new SensorEventListener() {
+            float[] gravity = null;
+            float[] geomagnetic = null;
+            float R[] = new float[9];
+            float I[] = new float[9];
+            float orientation[] = new float[3];
             @Override
             public void onSensorChanged(SensorEvent event) {
+                /*
+                System.out.println(event.sensor.getStringType());
                 String txt = "";
-                //m_textBox.getText().clear();
+                m_textBox.getText().clear();
                 for (int i = 0; i < event.values.length; i++) {
                     txt += ("values[" + i + "]: " + Math.round(Math.toDegrees(event.values[i]))) + "\r\n";
                 }
-                /*
                 if(event.values.length > 0) {
                     m_textBox.append(txt);
                 }*/
+                //copy paste stack overflow yeahh
+                float azimut = 0.0f, pitch = 0.0f, roll = 0.0f;
+                if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                    // Log.i("if","accelerometer");
+                    gravity = event.values;
+                }
+                if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+
+                    //Log.i("if","geomagnetic");
+                    geomagnetic = event.values;
+                }
+                if (event.sensor.getType() != Sensor.TYPE_MAGNETIC_FIELD && event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
+                    //Log.i("que",event.sensor.toString());
+                }
+
+                if (gravity != null && geomagnetic != null) {
+
+                    boolean success = SensorManager.getRotationMatrix(R, I, gravity, geomagnetic);
+                    if (success) {
+                        SensorManager.getOrientation(R, orientation);
+                        azimut = (float) Math.toDegrees(orientation[0]); // orientation contains: azimut, pitch and roll
+                        pitch = (float) Math.toDegrees(orientation[1]);
+                        roll = (float) Math.toDegrees(orientation[2]);
+                        m_textBox.getText().clear();
+                        m_textBox.append("azi: " + azimut + "\n");
+                        m_textBox.append("pitch: " + pitch + "\n");
+                        m_textBox.append("roll: " + roll + "\n");
+                    } else {
+                        Log.i("main()", "no success");
+                    }
+                }
             }
 
             @Override
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
                 Log.i("SensorEventListener()", "Listener: " + sensor.getName() + " | acc: " + accuracy);
             }
-        }, m_rotationSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        };
+        m_sensorManager.registerListener(listener, m_accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        m_sensorManager.registerListener(listener, m_geomagnetic, SensorManager.SENSOR_DELAY_NORMAL);
         /* Returns true on all init */
         boolean all_success;
 
         all_success = (m_connectButton != null) && (m_onoffSwitch != null) && (m_steerSeekbar != null) && (m_moveSeekbar != null) && (m_textBox != null)
                 && (m_btAdapter != null)
-                && (m_rotationSensor != null);
+                && (m_accelerometer != null) && (m_geomagnetic != null);
         return all_success;
     }
 

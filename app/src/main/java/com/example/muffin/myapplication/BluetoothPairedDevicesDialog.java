@@ -50,8 +50,8 @@ class BluetoothPairedDevicesDialogOnClickListener implements DialogInterface.OnC
 }
 
 public class BluetoothPairedDevicesDialog extends DialogFragment {
-    MainActivity m_currentActivity;
-    EditText m_debugTextBox;
+    private MainActivity m_currentActivity;
+    private EditText m_debugTextBox;
     private Set<BluetoothDevice> m_btDevices;
 
     public BluetoothPairedDevicesDialog initialize(MainActivity currentActivity, EditText debugTextBox, Set<BluetoothDevice> btDevices) {
