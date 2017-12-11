@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.muffin.myapplication.MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="19dp"
+        android:layout_marginTop="144dp"
+        android:text="test 0.0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_connect"
+        android:layout_width="179dp"
+        android:layout_height="wrap_content"
+        android:text="Connect"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.322" />
+
+    <EditText
+        android:id="@+id/editText_debugConsole"
+        android:layout_width="229dp"
+        android:layout_height="252dp"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:text="== DEBUG CONSOLE =="
+        app:layout_constraintBottom_toTopOf="@+id/textView_leftright"
+        app:layout_constraintEnd_toStartOf="@+id/seekBar_move"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+
+    <Switch
+        android:id="@+id/switch_onoff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="153dp"
+        android:layout_marginTop="43dp"
+        android:text="Power"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button_connect"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_leftright"
+        android:layout_width="119dp"
+        android:layout_height="27dp"
+        android:text="Steering 0°"
+        app:layout_constraintBottom_toTopOf="@+id/seekBar_steer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/textView_move"
+        app:layout_constraintHorizontal_bias="0.274"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_debugConsole" />
+
+    <TextView
+        android:id="@+id/textView_move"
+        android:layout_width="128dp"
+        android:layout_height="27dp"
+        android:text="Move Speed 0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView_leftright"
+        app:layout_constraintTop_toBottomOf="@+id/button_connect"
+        app:layout_constraintVertical_bias="0.673" />
+
+    <SeekBar
+        android:id="@+id/seekBar_steer"
+        android:layout_width="195dp"
+        android:layout_height="17dp"
+        android:max="500"
+        android:min="0"
+        android:progress="250"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.239"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_leftright"
+        app:layout_constraintVertical_bias="0.647" />
+
+    <com.example.muffin.myapplication.VerticalSeekBar
+        android:id="@+id/seekBar_move"
+        android:layout_width="16dp"
+        android:layout_height="229dp"
+        android:layout_marginBottom="32dp"
+        android:max="512"
+        android:min="0"
+        android:progress="256"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toEndOf="@+id/textView_move" />
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="174dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:checked="false"
+        android:enabled="false"
+        android:text="Connected ?"
+        app:layout_constraintBottom_toTopOf="@+id/button_connect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+</android.support.constraint.ConstraintLayout>
