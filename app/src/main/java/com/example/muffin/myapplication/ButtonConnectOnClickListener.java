@@ -1,6 +1,5 @@
 package com.example.muffin.myapplication;
 
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
@@ -16,10 +15,10 @@ import java.util.Set;
 
 public class ButtonConnectOnClickListener implements View.OnClickListener {
     private BluetoothAdapter m_btAdapter;
-    private Activity m_currentActivity;
+    private MainActivity m_currentActivity;
     private EditText m_debugTextBox;
 
-    public ButtonConnectOnClickListener(BluetoothAdapter btAdapter, Activity currentActivity, EditText debugTextBox) {
+    public ButtonConnectOnClickListener(BluetoothAdapter btAdapter, MainActivity currentActivity, EditText debugTextBox) {
         m_btAdapter = btAdapter;
         m_currentActivity = currentActivity;
         m_debugTextBox = debugTextBox;

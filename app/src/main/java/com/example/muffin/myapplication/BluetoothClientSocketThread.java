@@ -102,7 +102,7 @@ public class BluetoothClientSocketThread implements Runnable {
     public void listen() {
         /* Allocating more-than-enough memory for listening */
         m_buf = new byte[1024];
-        int i = 0;//"DELETE"
+
         boolean quit = false;
         while (quit) {
             int byteLen = 0;

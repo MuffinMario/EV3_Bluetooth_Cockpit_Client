@@ -19,7 +19,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     /* Constants */
     public static final int REQUEST_ENABLE_BT = 1;
-    public static BluetoothClientSocketThread m_btMain;
+    public BluetoothClientSocketThread m_btMain;
     /* GUI */
     private Button m_connectButton;
     private Switch m_onoffSwitch;

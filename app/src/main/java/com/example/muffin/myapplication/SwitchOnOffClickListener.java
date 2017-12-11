@@ -19,6 +19,8 @@ public class SwitchOnOffClickListener implements View.OnClickListener {
     public void onClick(View v) {
         Switch nintendo = (Switch) v;
         boolean check = nintendo.isChecked();
-        m_currentActivity.m_btMain.write(new String("O|" + check).getBytes());
+        if (m_currentActivity.m_btMain != null && m_currentActivity.m_btMain.getSocket() != null && m_currentActivity.m_btMain.getSocket().isConnected() == true) {
+            m_currentActivity.m_btMain.write(new String("O|" + check).getBytes());
+        }
     }
 }

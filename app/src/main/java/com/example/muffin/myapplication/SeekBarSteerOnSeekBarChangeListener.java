@@ -1,6 +1,5 @@
 package com.example.muffin.myapplication;
 
-import android.app.Activity;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -11,10 +10,10 @@ import android.widget.TextView;
 
 public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
     int previous_rotation = 0;
-    private Activity m_currentActivity;
+    private MainActivity m_currentActivity;
     private TextView m_leftrightText;
 
-    public SeekBarSteerOnSeekBarChangeListener(Activity currentActivity, TextView leftrightText) {
+    public SeekBarSteerOnSeekBarChangeListener(MainActivity currentActivity, TextView leftrightText) {
         m_currentActivity = currentActivity;
         m_leftrightText = leftrightText;
     }
@@ -61,11 +60,11 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
 
     private void rotateCar(int rotation) {
         if (rotation != previous_rotation) {
-            if (MainActivity.m_btMain != null) {
-                if (MainActivity.m_btMain.getSocket() != null) {
-                    if (MainActivity.m_btMain.getSocket().isConnected()) {
+            if (m_currentActivity.m_btMain != null) {
+                if (m_currentActivity.m_btMain.getSocket() != null) {
+                    if (m_currentActivity.m_btMain.getSocket().isConnected()) {
                     /* If device is found - transmit data */
-                        MainActivity.m_btMain.write(new String("R|" + rotation).getBytes());
+                        m_currentActivity.m_btMain.write(new String("R|" + rotation).getBytes());
                     }
                 }
             }

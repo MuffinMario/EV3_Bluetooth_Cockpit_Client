@@ -1,6 +1,5 @@
 package com.example.muffin.myapplication;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.bluetooth.BluetoothDevice;
@@ -18,16 +17,16 @@ import java.util.Set;
 class BluetoothPairedDevicesDialogOnClickListener implements DialogInterface.OnClickListener {
     BluetoothDevice[] m_btDevices;
     EditText m_debugTextBox;
-    Activity m_currentActivity;
+    MainActivity m_currentActivity;
 
-    public BluetoothPairedDevicesDialogOnClickListener(EditText debugTextBox, Activity currentActivity, BluetoothDevice[] devices) {
+    public BluetoothPairedDevicesDialogOnClickListener(EditText debugTextBox, MainActivity currentActivity, BluetoothDevice[] devices) {
         m_btDevices = devices;
         m_debugTextBox = debugTextBox;
         m_currentActivity = currentActivity;
     }
 
     public void connect(BluetoothDevice btDevice) {
-        Thread t = new Thread(MainActivity.m_btMain = new BluetoothClientSocketThread(m_currentActivity, m_debugTextBox, btDevice));
+        Thread t = new Thread(m_currentActivity.m_btMain = new BluetoothClientSocketThread(m_currentActivity, m_debugTextBox, btDevice));
         t.start();
     }
 
@@ -51,11 +50,11 @@ class BluetoothPairedDevicesDialogOnClickListener implements DialogInterface.OnC
 }
 
 public class BluetoothPairedDevicesDialog extends DialogFragment {
-    Activity m_currentActivity;
+    MainActivity m_currentActivity;
     EditText m_debugTextBox;
     private Set<BluetoothDevice> m_btDevices;
 
-    public BluetoothPairedDevicesDialog initialize(Activity currentActivity, EditText debugTextBox, Set<BluetoothDevice> btDevices) {
+    public BluetoothPairedDevicesDialog initialize(MainActivity currentActivity, EditText debugTextBox, Set<BluetoothDevice> btDevices) {
         m_btDevices = btDevices;
         m_currentActivity = currentActivity;
         m_debugTextBox = debugTextBox;
