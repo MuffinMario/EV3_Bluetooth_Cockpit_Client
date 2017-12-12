@@ -63,8 +63,8 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
             if (m_currentActivity.m_btMain != null) {
                 if (m_currentActivity.m_btMain.getSocket() != null) {
                     if (m_currentActivity.m_btMain.getSocket().isConnected()) {
-                    /* If device is found - transmit data */
-                        m_currentActivity.m_btMain.write(new String("R|" + rotation).getBytes());
+                        /* If device is found - transmit data */
+                        m_currentActivity.m_btMain.write(new String("S" + rotation).getBytes());
                     }
                 }
             }

@@ -13,7 +13,6 @@ import android.widget.EditText;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.UUID;
 
 /**
  * Created by Muffin on 09.12.2017.
@@ -50,7 +49,7 @@ public class BluetoothClientSocketThread implements Runnable {
 
 
         try {
-            btClient = m_btDevice.createRfcommSocketToServiceRecord(UUID.randomUUID());
+            btClient = m_btDevice.createRfcommSocketToServiceRecord(btDevice.getUuids()[0].getUuid());
         } catch (IOException ioe) {
             Log.e(this.getClass().getName() + "()", "Socket couldn't be created: ", ioe);
         }
