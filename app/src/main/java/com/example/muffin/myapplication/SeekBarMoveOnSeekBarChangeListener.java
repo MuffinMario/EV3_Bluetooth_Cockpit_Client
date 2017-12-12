@@ -9,9 +9,12 @@ import android.widget.TextView;
  */
 
 public class SeekBarMoveOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+    /* Waiting time between next accepted updateProgress on onProgressChanged */
+    private static final long TIME_CALL_COOLDOWN = 500L;
     int previous_speed = 0;
     private MainActivity m_currentActivity;
     private TextView m_moveText;
+    private long lastTimeCalled = 0L;
 
     public SeekBarMoveOnSeekBarChangeListener(MainActivity currentActivity, TextView moveText) {
         m_currentActivity = currentActivity;
@@ -72,6 +75,10 @@ public class SeekBarMoveOnSeekBarChangeListener implements SeekBar.OnSeekBarChan
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         // TODO Auto-generated method stub
-        updateProgress(seekBar, progress);
+        long thisTime = System.currentTimeMillis();
+        if (thisTime - lastTimeCalled >= TIME_CALL_COOLDOWN) {
+            updateProgress(seekBar, progress);
+            lastTimeCalled = thisTime;
+        }
     }
 }

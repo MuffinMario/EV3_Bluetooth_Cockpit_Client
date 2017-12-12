@@ -103,10 +103,10 @@ public class MainActivity extends AppCompatActivity {
                         azimut = (float) Math.toDegrees(orientation[0]); // orientation contains: azimut, pitch and roll
                         pitch = (float) Math.toDegrees(orientation[1]);
                         roll = (float) Math.toDegrees(orientation[2]);
-                        m_textBox.getText().clear();
-                        m_textBox.append("azi: " + azimut + "\n");
-                        m_textBox.append("pitch: " + pitch + "\n");
-                        m_textBox.append("roll: " + roll + "\n");
+                        //m_textBox.getText().clear();
+                        //m_textBox.append("azi: " + azimut + "\n");
+                        //m_textBox.append("pitch: " + pitch + "\n");
+                        //m_textBox.append("roll: " + roll + "\n");
                     } else {
                         Log.i("main()", "no success");
                     }

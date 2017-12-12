@@ -112,6 +112,7 @@ public class BluetoothClientSocketThread implements Runnable {
                 quit = handleMessage(new String(m_buf));
             } catch (IOException e) {
                 Log.e(getClass().getName(), e.getMessage());
+                onConnectionLost();
             }
         }
     }

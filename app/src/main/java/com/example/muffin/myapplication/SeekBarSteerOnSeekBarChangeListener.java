@@ -9,9 +9,12 @@ import android.widget.TextView;
  */
 
 public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+    /* Waiting time between next accepted updateProgress on onProgressChanged */
+    private static final long TIME_CALL_COOLDOWN = 500L;
     int previous_rotation = 0;
     private MainActivity m_currentActivity;
     private TextView m_leftrightText;
+    private long lastTimeCalled = 0L;
 
     public SeekBarSteerOnSeekBarChangeListener(MainActivity currentActivity, TextView leftrightText) {
         m_currentActivity = currentActivity;
@@ -34,8 +37,7 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
         String process = "Steering " + realprogress + "°";
         Log.i(getClass().getName(), process);
         m_leftrightText.setText(process);
-        if (realprogress < 0)
-            rotateCar(realprogress);
+        rotateCar(realprogress);
     }
 
     private int invert_clamp(int val, int min, int max, int goalval) {
@@ -65,6 +67,7 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
                     if (m_currentActivity.m_btMain.getSocket().isConnected()) {
                         /* If device is found - transmit data */
                         m_currentActivity.m_btMain.write(new String("S" + rotation).getBytes());
+                        previous_rotation = rotation;
                     }
                 }
             }
@@ -74,6 +77,10 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         // TODO Auto-generated method stub
-        updateProgress(seekBar, progress);
+        long thisTime = System.currentTimeMillis();
+        if (thisTime - lastTimeCalled >= TIME_CALL_COOLDOWN) {
+            updateProgress(seekBar, progress);
+            lastTimeCalled = thisTime;
+        }
     }
 }

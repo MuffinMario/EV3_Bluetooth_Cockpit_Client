@@ -49,11 +49,12 @@ public class ButtonConnectOnClickListener implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        Toast.makeText(m_currentActivity.getApplicationContext(), "Searching...", Toast.LENGTH_SHORT).show();
+
         if (!m_btAdapter.isEnabled()) {
             activateBluetooth();
             Toast.makeText(m_currentActivity.getApplicationContext(), "Please enable Bluetooth first.", Toast.LENGTH_SHORT).show();
         } else {
+            Toast.makeText(m_currentActivity.getApplicationContext(), "Searching...", Toast.LENGTH_SHORT).show();
             createPairingDeviceDialog();
         }
 
