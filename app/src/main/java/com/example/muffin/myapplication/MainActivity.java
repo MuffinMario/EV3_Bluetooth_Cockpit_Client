@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         m_connectButton.setOnClickListener(new ButtonConnectOnClickListener(m_btAdapter, this, m_textBox));
         m_onoffSwitch.setOnClickListener(new SwitchOnOffClickListener(this));
         m_steerSeekbar.setOnSeekBarChangeListener(new SeekBarSteerOnSeekBarChangeListener(this, m_leftrightText));
-        m_moveSeekbar.setOnSeekBarChangeListener(new SeekBarMoveOnSeekBarChangeListener(this, m_moveText));
+        m_moveSeekbar.setOnSeekBarChangeListener(new SeekBarMoveOnSeekBarChangeListener(this, m_moveSeekbar, m_moveText));
         SensorEventListener listener = new SensorEventListener() {
             float[] gravity = null;
             float[] geomagnetic = null;

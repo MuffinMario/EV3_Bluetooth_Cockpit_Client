@@ -1,6 +1,5 @@
 package com.example.muffin.myapplication;
 
-import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,8 +20,7 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
         m_leftrightText = leftrightText;
     }
 
-    private void updateProgress(SeekBar seekBar, int progress) {
-
+    private void updateVisual(SeekBar seekBar, int progress) {
         int realprogress = ((seekBar.getMax() + 1) / 2 - progress) * -1;
         // Very lazy way to fix wrong math
         if (realprogress > 255) realprogress = 255;
@@ -32,11 +30,24 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
         if (newclamp != realprogress) {
             realprogress = newclamp;
             seekBar.setProgress(seekBar.getMax() / 2);
+        } else {
+            seekBar.setProgress(progress);
         }
 
         String process = "Steering " + realprogress + "°";
-        Log.i(getClass().getName(), process);
         m_leftrightText.setText(process);
+    }
+
+    private void updateProgress(SeekBar seekBar, int progress) {
+        int realprogress = ((seekBar.getMax() + 1) / 2 - progress) * -1;
+        // Very lazy way to fix wrong math
+        if (realprogress > 255) realprogress = 255;
+
+
+        int newclamp = invert_clamp(realprogress, -5, 5, 0);
+        if (newclamp != realprogress) {
+            realprogress = newclamp;
+        }
         rotateCar(realprogress);
     }
 
@@ -51,7 +62,7 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         // TODO Auto-generated method stub
-        seekBar.setProgress(seekBar.getMax() / 2);
+        updateVisual(seekBar, seekBar.getMax() / 2);
         updateProgress(seekBar, seekBar.getMax() / 2);
     }
 
@@ -62,12 +73,15 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
 
     private void rotateCar(int rotation) {
         if (rotation != previous_rotation) {
-            if (m_currentActivity.m_btMain != null) {
-                if (m_currentActivity.m_btMain.getSocket() != null) {
-                    if (m_currentActivity.m_btMain.getSocket().isConnected()) {
+            int rotationDifference = Math.abs(rotation - previous_rotation);
+            if (rotationDifference >= 5) {
+                if (m_currentActivity.m_btMain != null) {
+                    if (m_currentActivity.m_btMain.getSocket() != null) {
+                        if (m_currentActivity.m_btMain.getSocket().isConnected()) {
                         /* If device is found - transmit data */
-                        m_currentActivity.m_btMain.write(new String("S" + rotation).getBytes());
-                        previous_rotation = rotation;
+                            m_currentActivity.m_btMain.write(new String("S" + rotation).getBytes());
+                            previous_rotation = rotation;
+                        }
                     }
                 }
             }
@@ -77,6 +91,7 @@ public class SeekBarSteerOnSeekBarChangeListener implements SeekBar.OnSeekBarCha
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         // TODO Auto-generated method stub
+        updateVisual(seekBar, progress);
         long thisTime = System.currentTimeMillis();
         if (thisTime - lastTimeCalled >= TIME_CALL_COOLDOWN) {
             updateProgress(seekBar, progress);

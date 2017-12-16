@@ -103,10 +103,11 @@ public class BluetoothClientSocketThread implements Runnable {
         m_buf = new byte[1024];
 
         boolean quit = false;
-        while (quit) {
+        while (!quit) {
             int byteLen = 0;
             try {
                 byteLen = m_is.read(m_buf);
+                Log.d("read():", new String(m_buf));
                 Message theMessage = m_handler.obtainMessage(BluetoothClientSocketThread.RETURN_READ, byteLen, -1, new String(m_buf));
                 theMessage.sendToTarget();
                 quit = handleMessage(new String(m_buf));
