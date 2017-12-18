@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_ENABLE_BT = 1;
     public BluetoothClientSocketThread m_btMain;
     /* GUI */
-    private Button m_connectButton;
-    private Switch m_onoffSwitch;
-    private SeekBar m_steerSeekbar;
-    private VerticalSeekBar m_moveSeekbar;
-    private EditText m_textBox;
-    private TextView m_leftrightText;
-    private TextView m_moveText;
+    public Button m_connectButton;
+    public Switch m_onoffSwitch;
+    public SeekBar m_steerSeekbar;
+    public SeekBar m_moveSeekbar;
+    public EditText m_textBox;
+    public TextView m_leftrightText;
+    public TextView m_moveText;
     /* Adapter */
     private BluetoothAdapter m_btAdapter;
     /* Sensors */
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         /* 4. Add Listeners */
         m_connectButton.setOnClickListener(new ButtonConnectOnClickListener(m_btAdapter, this, m_textBox));
         m_onoffSwitch.setOnClickListener(new SwitchOnOffClickListener(this));
-        m_steerSeekbar.setOnSeekBarChangeListener(new SeekBarSteerOnSeekBarChangeListener(this, m_leftrightText));
+        m_steerSeekbar.setOnSeekBarChangeListener(new SeekBarSteerOnSeekBarChangeListener(this, m_steerSeekbar, m_leftrightText));
         m_moveSeekbar.setOnSeekBarChangeListener(new SeekBarMoveOnSeekBarChangeListener(this, m_moveSeekbar, m_moveText));
         SensorEventListener listener = new SensorEventListener() {
             float[] gravity = null;
@@ -134,8 +134,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        Log.i("main", "onCreate: ");
 
         if (!init()) {
+            Log.i("INIT()", "ERROR AHHH");
             System.exit(1);
         }
     }

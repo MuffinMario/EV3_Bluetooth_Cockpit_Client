@@ -1,6 +1,5 @@
 package com.example.muffin.myapplication;
 
-import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.EditText;
@@ -11,14 +10,24 @@ import android.widget.Toast;
  */
 
 public class BlueToothMessageHandler extends Handler {
-    private Activity m_currentActivity;
+    private MainActivity m_currentActivity;
     private EditText m_textBox;
 
-    public BlueToothMessageHandler(Activity currentActivity, EditText debugTextBox) {
+    public BlueToothMessageHandler(MainActivity currentActivity, EditText debugTextBox) {
         m_currentActivity = currentActivity;
         m_textBox = debugTextBox;
     }
 
+    private void updateAllItems(InformationWrapper informationWrapper) {
+        int h_1 = m_currentActivity.m_moveSeekbar.getMax() / 2;
+        m_currentActivity.m_moveSeekbar.setProgress(h_1 + informationWrapper.getSpeed());
+        m_currentActivity.m_moveText.setText("Move Speed " + informationWrapper.getSpeed());
+        int h_2 = m_currentActivity.m_steerSeekbar.getMax() / 2;
+        m_currentActivity.m_steerSeekbar.setProgress(h_2 + informationWrapper.getRotation());
+        m_currentActivity.m_leftrightText.setText("Steering " + informationWrapper.getRotation() + "°");
+
+        m_currentActivity.m_onoffSwitch.setChecked(informationWrapper.isPower());
+    }
     @Override
     public void handleMessage(Message msg) {
         // Codes
@@ -32,6 +41,11 @@ public class BlueToothMessageHandler extends Handler {
             case BluetoothClientSocketThread.RETURN_TOAST:
                 Toast.makeText(m_currentActivity.getApplicationContext(), (String) msg.obj, Toast.LENGTH_SHORT).show();
                 break;
+            case BluetoothClientSocketThread.RETURN_INFORMATION:
+                InformationWrapper informationWrapper = (InformationWrapper) msg.obj;
+                updateAllItems(informationWrapper);
+
+
         }
     }
 }

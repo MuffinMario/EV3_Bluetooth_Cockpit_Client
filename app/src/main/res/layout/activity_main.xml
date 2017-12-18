@@ -31,14 +31,14 @@
     <EditText
         android:id="@+id/editText_debugConsole"
         android:layout_width="229dp"
-        android:layout_height="252dp"
+        android:layout_height="62dp"
         android:ems="10"
         android:enabled="false"
         android:inputType="textMultiLine"
         android:text="== DEBUG CONSOLE =="
         app:layout_constraintBottom_toTopOf="@+id/textView_leftright"
         app:layout_constraintEnd_toStartOf="@+id/seekBar_move"
-        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox" />
 
@@ -77,34 +77,21 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView_leftright"
         app:layout_constraintTop_toBottomOf="@+id/button_connect"
-        app:layout_constraintVertical_bias="0.673" />
+        app:layout_constraintVertical_bias="0.502" />
 
     <SeekBar
         android:id="@+id/seekBar_steer"
-        android:layout_width="195dp"
-        android:layout_height="17dp"
-        android:max="500"
+        android:layout_width="349dp"
+        android:layout_height="12dp"
+        android:max="400"
         android:min="0"
-        android:progress="250"
+        android:progress="200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.239"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_leftright"
         app:layout_constraintVertical_bias="0.647" />
-
-    <com.example.muffin.myapplication.VerticalSeekBar
-        android:id="@+id/seekBar_move"
-        android:layout_width="16dp"
-        android:layout_height="229dp"
-        android:layout_marginBottom="32dp"
-        android:max="201"
-        android:min="0"
-        android:progress="100"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@+id/textView_move" />
 
     <CheckBox
         android:id="@+id/checkBox"
@@ -120,5 +107,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp" />
+
+    <SeekBar
+        android:id="@+id/seekBar_move"
+        android:layout_width="180dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:max="200"
+        android:min="0"
+        android:progress="100"
+        android:rotation="270"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/switch_onoff"
+        app:layout_constraintHorizontal_bias="0.264"
+        app:layout_constraintStart_toEndOf="@+id/textView_move"
+        app:layout_constraintTop_toBottomOf="@+id/switch_onoff"
+        app:layout_constraintVertical_bias="0.528" />
 
 </android.support.constraint.ConstraintLayout>
